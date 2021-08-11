@@ -13,9 +13,7 @@ import java.util.List;
 public class SessionInfoController {
     @Autowired
     private SessionInfoRepository sessionInfoRepository;
-    SessionInfoController(SessionInfoRepository sessionInfoRepository){
-        this.sessionInfoRepository = sessionInfoRepository;
-    }
+
     @GetMapping("/channels")
     public ResponseEntity<List<SessionInfo>> getAllChannels(){
         return ResponseEntity.ok().body(sessionInfoRepository.findAll());
@@ -23,5 +21,10 @@ public class SessionInfoController {
     @PostMapping("/channels/create")
     public SessionInfo createSession(@RequestBody SessionInfo sessionInfo){
         return sessionInfoRepository.save(sessionInfo);
+    }
+    @PostMapping("/channels/set")
+    public List<SessionInfo> setAll(@RequestBody List<SessionInfo> sessionInfo){
+        sessionInfoRepository.deleteAll();
+         return sessionInfoRepository.saveAll(sessionInfo);
     }
 }
