@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,11 @@ public class AlbumImgController {
     }
     @DeleteMapping("/album/delete")
     public void deleteAlbum(@RequestBody String albumImg) throws IOException {
+    deleteFile(albumImgRepository.findById(albumImg).get().getImgPath());
        albumImgRepository.deleteById(albumImg);
+    }
+    public void deleteFile(String fileName) throws IOException {
+        Path fileToDeletePath = Paths.get(PARENT + fileName);
+        Files.delete(fileToDeletePath);
     }
 }
