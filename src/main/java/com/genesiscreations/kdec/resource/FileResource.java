@@ -41,10 +41,10 @@ public class FileResource {
         return ResponseEntity.ok().body(fileNames);
     }
 
-    @GetMapping("downloads/{album}/{filename}")
+    @GetMapping("mp3/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("album") String album, @PathVariable("filename") String filename) throws IOException {
 
-        Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(album).resolve(filename);
+        Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(filename);
         if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
         Resource resource = new UrlResource(filePath.toUri());
         System.out.println(filePath.toUri());
