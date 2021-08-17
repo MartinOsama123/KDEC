@@ -21,6 +21,10 @@ public class SongInfoController {
     public ResponseEntity<List<SongInfo>> getAllSongs() {
         return  ResponseEntity.ok().body(songInfoRepository.findAll());
     }
+    @GetMapping("/albums")
+    public ResponseEntity<List<String>> getAlbums() {
+        return  ResponseEntity.ok().body(songInfoRepository.getAlbums());
+    }
     @GetMapping("/songs/{album}")
     public ResponseEntity<List<SongInfo>> getAllSongsByAlbum(@PathVariable("album") String album) {
         return  ResponseEntity.ok().body(songInfoRepository.findAllByAlbum(album));
