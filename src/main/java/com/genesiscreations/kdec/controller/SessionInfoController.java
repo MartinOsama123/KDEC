@@ -70,8 +70,12 @@ public class SessionInfoController {
         sessionInfoRepository.deleteAll();
          return sessionInfoRepository.saveAll(sessionInfo);
     }
-    public void deleteFile(String fileName) throws IOException {
+    public void deleteFile(String fileName)  {
         Path fileToDeletePath = Paths.get(PARENT + fileName);
-        Files.delete(fileToDeletePath);
+        try {
+            Files.delete(fileToDeletePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
