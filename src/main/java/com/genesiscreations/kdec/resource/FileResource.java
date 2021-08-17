@@ -59,6 +59,7 @@ public class FileResource {
 
 
     Path fileToDeletePath = Paths.get(PARENT + fileName);
+
     Files.delete(fileToDeletePath);
 }
     @GetMapping("albums")

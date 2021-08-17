@@ -1,26 +1,34 @@
 package com.genesiscreations.kdec.controller;
 
 import com.genesiscreations.kdec.model.AgoraChannel;
+import com.genesiscreations.kdec.model.AlbumImg;
 import com.genesiscreations.kdec.model.SessionInfo;
 import com.genesiscreations.kdec.repository.SessionInfoRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static java.nio.file.Files.copy;
+import static java.nio.file.Paths.get;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @RequestMapping("/api")
 public class SessionInfoController {
+    public static final String PARENT = System.getProperty("user.dir") + "/img/";
     @Autowired
     private SessionInfoRepository sessionInfoRepository;
 
@@ -49,7 +57,7 @@ public class SessionInfoController {
                     System.out.println(s1.getChannelName());
                 }
             }
-                if(!found) sessionInfoRepository.delete(s1);
+                if(!found){deleteFile(s1.getImgPath()); sessionInfoRepository.delete(s1);}
         }
         return ResponseEntity.ok().body(sessionInfoRepository.findAll());
     }
@@ -61,5 +69,9 @@ public class SessionInfoController {
     public List<SessionInfo> setAll(@RequestBody List<SessionInfo> sessionInfo){
         sessionInfoRepository.deleteAll();
          return sessionInfoRepository.saveAll(sessionInfo);
+    }
+    public void deleteFile(String fileName) throws IOException {
+        Path fileToDeletePath = Paths.get(PARENT + fileName);
+        Files.delete(fileToDeletePath);
     }
 }
