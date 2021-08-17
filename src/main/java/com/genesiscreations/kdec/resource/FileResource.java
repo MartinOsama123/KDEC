@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,30 +28,39 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @RequestMapping("/church")
 public class FileResource {
     public static final String PARENT = System.getProperty("user.dir") + "/mp3/";
+
     @PostMapping("/upload")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFileList) throws IOException {
+    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFileList) throws IOException {
         List<String> fileNames = new ArrayList<>();
-        for(MultipartFile file : multipartFileList){
+        for (MultipartFile file : multipartFileList) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            Path  fileStorage = get(PARENT,fileName).toAbsolutePath().normalize();
-            copy(file.getInputStream(),fileStorage,REPLACE_EXISTING);
+            Path fileStorage = get(PARENT, fileName).toAbsolutePath().normalize();
+            copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
             fileNames.add(fileName);
         }
         return ResponseEntity.ok().body(fileNames);
     }
+
     @GetMapping("downloads/{album}/{filename}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable("album") String album,@PathVariable("filename") String filename) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@PathVariable("album") String album, @PathVariable("filename") String filename) throws IOException {
 
         Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(album).resolve(filename);
-        if(!Files.exists(filePath)) throw new FileNotFoundException(filename+ "was not found");
-            Resource resource = new UrlResource(filePath.toUri());
+        if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
+        Resource resource = new UrlResource(filePath.toUri());
         System.out.println(filePath.toUri());
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("File-Name",filename);
-            httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION,"attachment;File-Name="+ resource.getFilename());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("File-Name", filename);
+        httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
 
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath))).headers(httpHeaders).body(resource);
     }
+
+    public void deleteFile(String fileName) throws IOException {
+     Files.createFile(Paths.get(PARENT + fileName));
+
+    Path fileToDeletePath = Paths.get(PARENT + fileName);
+    Files.delete(fileToDeletePath);
+}
     @GetMapping("albums")
     public ResponseEntity<List<String>> getAlbums() throws IOException {
         Path filePath = get(PARENT).toAbsolutePath().normalize();

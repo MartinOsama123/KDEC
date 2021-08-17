@@ -2,8 +2,10 @@ package com.genesiscreations.kdec.controller;
 
 import com.genesiscreations.kdec.model.SessionInfo;
 import com.genesiscreations.kdec.model.SongInfo;
+import com.genesiscreations.kdec.repository.AlbumImgRepository;
 import com.genesiscreations.kdec.repository.SessionInfoRepository;
 import com.genesiscreations.kdec.repository.SongInfoRepository;
+import com.genesiscreations.kdec.resource.FileResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +18,15 @@ import java.util.List;
 public class SongInfoController {
     @Autowired
     private SongInfoRepository songInfoRepository;
-
+    @Autowired
+    private FileResource fileResource;
+    @Autowired
+    private AlbumImgRepository albumImgRepository;
     @GetMapping("/songs")
     public ResponseEntity<List<SongInfo>> getAllSongs() {
         return  ResponseEntity.ok().body(songInfoRepository.findAll());
     }
-    @GetMapping("/albums")
-    public ResponseEntity<List<String>> getAlbums() {
-        return  ResponseEntity.ok().body(songInfoRepository.getAlbums());
-    }
+
     @GetMapping("/songs/{album}")
     public ResponseEntity<List<SongInfo>> getAllSongsByAlbum(@PathVariable("album") String album) {
         return  ResponseEntity.ok().body(songInfoRepository.findAllByAlbum(album));
@@ -34,8 +36,9 @@ public class SongInfoController {
         return  ResponseEntity.ok().body(songInfoRepository.save(songInfo));
     }
     @DeleteMapping("/songs/delete")
-    public void deleteSong(@RequestBody int songName){
-
-         songInfoRepository.deleteById(songName);
+    public void deleteSong(@RequestBody SongInfo songName) throws IOException {
+        fileResource.deleteFile(songName.getSongName());
+        albumImgRepository.deleteById(songName.getAlbumName());
+        songInfoRepository.delete(songName);
     }
 }
