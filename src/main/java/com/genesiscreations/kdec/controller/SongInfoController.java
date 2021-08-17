@@ -20,8 +20,6 @@ public class SongInfoController {
     private SongInfoRepository songInfoRepository;
     @Autowired
     private FileResource fileResource;
-    @Autowired
-    private AlbumImgRepository albumImgRepository;
     @GetMapping("/songs")
     public ResponseEntity<List<SongInfo>> getAllSongs() {
         return  ResponseEntity.ok().body(songInfoRepository.findAll());
@@ -38,7 +36,6 @@ public class SongInfoController {
     @DeleteMapping("/songs/delete")
     public void deleteSong(@RequestBody SongInfo songName) throws IOException {
         fileResource.deleteFile(songName.getSongName());
-        albumImgRepository.deleteById(songName.getAlbumName());
         songInfoRepository.delete(songName);
     }
 }

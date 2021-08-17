@@ -56,7 +56,7 @@ public class FileResource {
     }
 
     public void deleteFile(String fileName) throws IOException {
-     Files.createFile(Paths.get(PARENT + fileName));
+        System.out.println(PARENT + fileName);
 
     Path fileToDeletePath = Paths.get(PARENT + fileName);
     Files.delete(fileToDeletePath);

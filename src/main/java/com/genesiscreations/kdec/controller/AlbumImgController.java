@@ -40,4 +40,8 @@ public class AlbumImgController {
         albumImgRepository.save(new AlbumImg(album,fileNames.get(0)));
         return ResponseEntity.ok().body(fileNames);
     }
+    @DeleteMapping("/album/delete")
+    public void deleteAlbum(@RequestBody String albumImg) throws IOException {
+       albumImgRepository.deleteById(albumImg);
+    }
 }
