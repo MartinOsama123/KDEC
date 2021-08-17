@@ -57,7 +57,7 @@ public class SessionInfoController {
                     System.out.println(s1.getChannelName());
                 }
             }
-                if(!found){deleteFile(s1.getImgPath()); sessionInfoRepository.delete(s1);}
+                if(!found){ sessionInfoRepository.delete(s1);}
         }
         return ResponseEntity.ok().body(sessionInfoRepository.findAll());
     }
