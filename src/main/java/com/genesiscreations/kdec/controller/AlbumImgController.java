@@ -63,7 +63,7 @@ public class AlbumImgController {
         httpHeaders.add("File-Name", filename);
         httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
 
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath))).headers(httpHeaders).body(resource);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).headers(httpHeaders).body(resource);
     }
     public void deleteFile(String fileName) throws IOException {
         Path fileToDeletePath = Paths.get(PARENT + fileName);
