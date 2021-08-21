@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
                     .setTitle(note.getTitle())
                     .setBody(note.getMessage())
                     .build();
-
+            System.out.println(note.getMessage() + note.getTitle());
             Message message = Message
                     .builder()
                     .setTopic(note.getTopic())
