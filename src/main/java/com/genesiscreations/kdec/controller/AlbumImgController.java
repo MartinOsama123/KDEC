@@ -53,9 +53,10 @@ public class AlbumImgController {
        albumImgRepository.deleteById(albumImg);
     }
     @GetMapping("img/{filename}")
-    public ResponseEntity<Resource> downloadFile( @PathVariable("filename") String filename) throws IOException {
+    public ResponseEntity<String> downloadFile( @PathVariable("filename") String filename) throws IOException {
 
         Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(filename);
+        System.out.println(filePath);
         if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
         Resource resource = new UrlResource(filePath.toUri());
         System.out.println(filePath.toUri());
@@ -63,7 +64,7 @@ public class AlbumImgController {
         httpHeaders.add("File-Name", filename);
         httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
 
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).headers(httpHeaders).body(resource);
+        return ResponseEntity.ok().body(filePath.toString());
     }
     public void deleteFile(String fileName) throws IOException {
         Path fileToDeletePath = Paths.get(PARENT + fileName);
