@@ -42,7 +42,7 @@ public class FileResource {
     }
 
     @GetMapping("mp3/{filename}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable("album") String album, @PathVariable("filename") String filename) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) throws IOException {
 
         Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(filename);
         if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
