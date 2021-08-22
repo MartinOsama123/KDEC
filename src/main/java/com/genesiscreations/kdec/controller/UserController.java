@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +19,10 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return  ResponseEntity.ok().body(userRepository.findAll());
+    }
+    @GetMapping("/users/{email}")
+    public ResponseEntity<Optional<User>> getUser(@PathVariable("email") String email) {
+        return  ResponseEntity.ok().body(userRepository.findById(email));
     }
     @PostMapping("/users/create")
     public  ResponseEntity<User> createUser(@RequestBody User user){

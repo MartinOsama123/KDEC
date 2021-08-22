@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -14,5 +15,6 @@ public class User {
     String email;
     String name;
     String phone;
+    List<String> subs;
 
 }
