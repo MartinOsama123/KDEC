@@ -15,6 +15,6 @@ public class User {
     String email;
     String name;
     String phone;
-    List<String> subs;
+  //  List<String> subs;
 
 }
