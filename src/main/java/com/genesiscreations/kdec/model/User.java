@@ -2,10 +2,8 @@ package com.genesiscreations.kdec.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,11 +11,14 @@ import java.util.List;
 @Data
 public class User {
     @Id
+    String uid;
     String email;
     String name;
     String phone;
     @Transient
-    List<NotificationInfo> notifications;
-  //  List<String> subs;
+    @ElementCollection(targetClass = NotificationInfo.class)
+    List<NotificationInfo> notifications = new ArrayList<>();
+    @ElementCollection(targetClass = String.class)
+    List<String> subs = new ArrayList<>();
 
 }
