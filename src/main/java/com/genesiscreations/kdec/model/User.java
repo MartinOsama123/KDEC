@@ -17,8 +17,23 @@ public class User {
     String phone;
     @Transient
     @ElementCollection(targetClass = NotificationInfo.class)
-    List<NotificationInfo> notifications = new ArrayList<>();
+    List<NotificationInfo> notifications;
     @ElementCollection(targetClass = String.class)
-    List<String> subs = new ArrayList<>();
+    List<String> subs;
+public User(){
+   if(notifications == null) notifications = new ArrayList<>();
+    if(subs == null) subs = new ArrayList<>();
+}
+    public User(String email, String name, String phone, List<NotificationInfo> notifications, List<String> subs) {
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.notifications = notifications;
+        this.subs = subs;
+    }
+
+    public void addNotification(NotificationInfo n){
+        this.notifications.add(n);
+    }
 
 }
