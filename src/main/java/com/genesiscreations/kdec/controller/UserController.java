@@ -23,8 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return  ResponseEntity.ok().body(userRepository.findAll());
@@ -41,16 +40,7 @@ public class UserController {
         System.out.println(uid);
         return  ResponseEntity.ok().body(userRepository.save(user));
     }
-    @PostMapping("/notification/add/{idToken}")
-    public  ResponseEntity<NotificationInfo> addNotification(@RequestBody NotificationInfo n, @PathVariable("idToken") String idToken) throws FirebaseAuthException {
-        String uid = verifyToken(idToken);
-        Optional<User> user = userRepository.findById(uid);
-        if(user.isPresent()){
-          n.setUser(user.get());
-            return ResponseEntity.ok().body(notificationRepository.save(n));
-        }
-        return  ResponseEntity.notFound().build();
-    }
+
 
     private String verifyToken(String token) throws FirebaseAuthException {
         return FirebaseAuth.getInstance().verifyIdToken(token).getUid();
