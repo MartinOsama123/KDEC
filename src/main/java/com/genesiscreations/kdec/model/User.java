@@ -15,14 +15,12 @@ public class User {
     String email;
     String name;
     String phone;
-    @Transient
-    @ElementCollection(targetClass = NotificationInfo.class)
+
+    @OneToMany(fetch= FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
     List<NotificationInfo> notifications;
     @ElementCollection(targetClass = String.class)
     List<String> subs;
 public User(){
-   if(notifications == null) notifications = new ArrayList<>();
-    if(subs == null) subs = new ArrayList<>();
 }
     public User(String email, String name, String phone, List<NotificationInfo> notifications, List<String> subs) {
         this.email = email;
