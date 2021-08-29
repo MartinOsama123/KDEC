@@ -8,7 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
-
+    @Query("select u.subs from User u where u.uid = :uid")
+    public Set<String> findSubsById(@Param("uid") String uid);
 }

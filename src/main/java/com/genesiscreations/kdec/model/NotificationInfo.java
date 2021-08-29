@@ -52,11 +52,11 @@ public class NotificationInfo {
         this.body = body;
     }
 
-    public LocalDateTime getBirthDay() {
+    public LocalDateTime getSendAt() {
         return sendAt;
     }
 
-    public void setBirthDay(LocalDateTime birthDay) {
+    public void setSendAt(LocalDateTime birthDay) {
         this.sendAt = birthDay;
     }
 
@@ -65,4 +65,6 @@ public class NotificationInfo {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

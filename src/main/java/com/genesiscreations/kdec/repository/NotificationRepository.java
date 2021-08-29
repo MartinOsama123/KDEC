@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationInfo,Integer> {
-    @Query("select n.user from NotificationInfo n where n.user.uid = :uid")
+    @Query("select u from User u where u.uid = :uid")
     User getUser(@Param("uid") String uid);
     @Query("select n from NotificationInfo n where n.user.uid = :uid")
     List<NotificationInfo> getNotifications(@Param("uid") String uid);

@@ -5,10 +5,11 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+
 public class User {
     @Id
     String uid;
@@ -18,11 +19,13 @@ public class User {
 
     @OneToMany(fetch= FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
     List<NotificationInfo> notifications;
-    @ElementCollection(targetClass = String.class)
-    List<String> subs;
+    @ElementCollection
+
+    @CollectionTable(name = "user_string", joinColumns = @JoinColumn(name = "user_uid"))
+    Set<String> subs;
 public User(){
 }
-    public User(String email, String name, String phone, List<NotificationInfo> notifications, List<String> subs) {
+    public User(String email, String name, String phone, List<NotificationInfo> notifications, Set<String> subs) {
         this.email = email;
         this.name = name;
         this.phone = phone;
@@ -34,4 +37,51 @@ public User(){
         this.notifications.add(n);
     }
 
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<NotificationInfo> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<NotificationInfo> notifications) {
+        this.notifications = notifications;
+    }
+
+    public Set<String> getSubs() {
+        return subs;
+    }
+
+    public void setSubs(Set<String> subs) {
+        this.subs = subs;
+    }
 }
