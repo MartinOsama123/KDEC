@@ -36,8 +36,6 @@ public class UserController {
     public  ResponseEntity<User> createUser(@RequestBody User user,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
         user.setUid(uid);
-        System.out.println("yyooo");
-        System.out.println(uid);
         return  ResponseEntity.ok().body(userRepository.save(user));
     }
 

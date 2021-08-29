@@ -12,6 +12,7 @@ public class SongInfo {
     String albumName;
     String lang;
     String songName;
+    String author;
 
     public SongInfo() {
     }
@@ -48,5 +49,13 @@ public class SongInfo {
 
     public void setSongName(String songName) {
         this.songName = songName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
