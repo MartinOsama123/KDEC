@@ -1,10 +1,12 @@
 package com.genesiscreations.kdec.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.firebase.auth.UserInfo;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -16,8 +18,8 @@ public class NotificationInfo {
     long id;
     String title;
     String body;
-    @DateTimeFormat(fallbackPatterns = "dd/MM/yyyy")
-     Date birthDay;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    LocalDateTime sendAt;
 
     @ManyToOne
     @JoinColumn(name="user_uid")
@@ -50,12 +52,12 @@ public class NotificationInfo {
         this.body = body;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public LocalDateTime getBirthDay() {
+        return sendAt;
     }
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
+    public void setBirthDay(LocalDateTime birthDay) {
+        this.sendAt = birthDay;
     }
 
 

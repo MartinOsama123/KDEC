@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -26,6 +27,7 @@ public class NotificationController {
         String uid = verifyToken(idToken);
         User user = notificationRepository.getUser(uid);
             n.setUser(user);
+            n.setBirthDay(LocalDateTime.now());
             return ResponseEntity.ok().body(notificationRepository.save(n));
     }
     private String verifyToken(String token) throws FirebaseAuthException {
