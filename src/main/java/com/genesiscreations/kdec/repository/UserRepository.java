@@ -12,6 +12,4 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
-    @Query("select u.subs from User u where u.uid = :uid")
-    public Set<String> findSubsById(@Param("uid") String uid);
 }

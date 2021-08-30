@@ -33,8 +33,7 @@ public class UserController {
     }
     @GetMapping("/users/subscriptions/{idToken}")
     public ResponseEntity<Set<String>> getAllSubs(@PathVariable("idToken") String idToken) throws FirebaseAuthException {
-
-        return  ResponseEntity.ok().body(userRepository.findSubsById(verifyToken(idToken)));
+       return userRepository.findById(verifyToken(idToken)).map(user -> ResponseEntity.ok().body(user.getSubs())).orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/users/{idToken}")
     public ResponseEntity<User> getUser(@PathVariable("idToken") String idToken) throws FirebaseAuthException {
@@ -48,22 +47,24 @@ public class UserController {
         return  ResponseEntity.ok().body(userRepository.save(user));
     }
     @PostMapping("/users/subscription/{topic}/{idToken}")
-    public  ResponseEntity<User> addSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
+    public  ResponseEntity<Set<String>> addSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
-        System.out.println(uid);
         Optional<User> user = userRepository.findById(uid);
-        user.ifPresent(value -> value.getSubs().add(topic));
-
-        return ResponseEntity.ok().body(userRepository.save(user.get()));
+        user.map(value -> {value.getSubs().add(topic);
+            userRepository.save(value);
+            return ResponseEntity.ok().body(user.get().getSubs());
+        });
+        return ResponseEntity.notFound().build();
     }
     @DeleteMapping("/users/subscription/{topic}/{idToken}")
     public  ResponseEntity<User> deleteSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
-        System.out.println(uid);
         Optional<User> user = userRepository.findById(uid);
-        user.ifPresent(value -> value.getSubs().remove(topic));
-
-        return ResponseEntity.ok().body(userRepository.save(user.get()));
+        user.map(value -> {value.getSubs().remove(topic);
+            userRepository.save(value);
+            return ResponseEntity.ok().body(user.get().getSubs());
+        });
+        return ResponseEntity.notFound().build();
     }
 
 

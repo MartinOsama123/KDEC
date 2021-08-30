@@ -39,7 +39,7 @@ public class NotificationController {
         User user = notificationRepository.getUser(uid);
             n.setUser(user);
             n.setSendAt(LocalDateTime.now());
-            firebaseMessagingRepository.sendNotification(new Note(n.getTitle(),n.getBody(),"Global"));
+           // firebaseMessagingRepository.sendNotification(new Note(n.getTitle(),n.getBody(),"Global"));
             return ResponseEntity.ok().body(notificationRepository.save(n));
     }
     private String verifyToken(String token) throws FirebaseAuthException {
