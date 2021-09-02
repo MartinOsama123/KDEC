@@ -40,6 +40,20 @@ public class UserController {
         Optional<User> user = userRepository.findById(verifyToken(idToken));
         return user.map(value -> ResponseEntity.ok().body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/users/messages")
+    public ResponseEntity<List<User>> getMessages()  {
+        List<User> users = userRepository.findAll().stream().filter(user -> !user.getMessages().isEmpty()).toList();
+        return  ResponseEntity.ok().body(users);
+    }
+    @PostMapping("/messages/create/{idToken}")
+    public  ResponseEntity<User> createMessage(@RequestBody String message,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
+        String uid = verifyToken(idToken);
+        Optional<User> user = userRepository.findById(uid);
+       return user.map(value -> {
+            value.getMessages().add(message);
+            return ResponseEntity.ok().body(userRepository.save(value));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
     @PostMapping("/users/create/{idToken}")
     public  ResponseEntity<User> createUser(@RequestBody User user,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);

@@ -21,16 +21,20 @@ public class User {
     List<NotificationInfo> notifications;
     @ElementCollection
 
-    @CollectionTable(name = "user_string", joinColumns = @JoinColumn(name = "user_uid"))
+    @CollectionTable(name = "user_subs", joinColumns = @JoinColumn(name = "user_uid"))
     Set<String> subs;
+    @ElementCollection
+    @CollectionTable(name = "user_messages", joinColumns = @JoinColumn(name = "user_uid"))
+    List<String> messages;
 public User(){
 }
-    public User(String email, String name, String phone, List<NotificationInfo> notifications, Set<String> subs) {
+    public User(String email, String name, String phone, List<NotificationInfo> notifications, Set<String> subs, List<String> messages) {
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.notifications = notifications;
         this.subs = subs;
+        this.messages = messages;
     }
 
     public void addNotification(NotificationInfo n){
@@ -83,5 +87,13 @@ public User(){
 
     public void setSubs(Set<String> subs) {
         this.subs = subs;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<String> messages) {
+        this.messages = messages;
     }
 }

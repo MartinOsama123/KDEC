@@ -13,11 +13,7 @@ import java.util.List;
 public interface SongInfoRepository  extends JpaRepository<SongInfo, Integer> {
     @Query( value = "SELECT * FROM song_info  where song_info.album_name = :albumName",nativeQuery = true)
     public List<SongInfo> findAllByAlbumIgnoreCase(String albumName);
-    @Query( value = "SELECT s.albumName FROM SongInfo s where lower(s.albumName) like lower(concat('%', :albumName,'%'))")
-    public List<String> findAllByAlbumNameIgnoreCase(String albumName);
-    @Query( value = "SELECT s.songName FROM SongInfo s where lower(s.songName)like lower(concat('%', :songName,'%'))")
-    public List<String> findAllBySongIgnoreCase(String songName);
-    @Query( value = "SELECT s.author FROM SongInfo s where lower(s.author) like lower(concat('%', :author,'%'))")
-    public List<String> findAllByAuthorIgnoreCase(String author);
+    @Query( value = "SELECT s FROM SongInfo s where lower(s.author) like lower(concat('%', :query,'%')) OR lower(s.albumName) like lower(concat('%', :query,'%')) OR lower(s.songName) like lower(concat('%', :query,'%'))")
+    public List<SongInfo> findAllByAuthorOrAlbumOrSongIgnoreCase(String query);
 
 }
