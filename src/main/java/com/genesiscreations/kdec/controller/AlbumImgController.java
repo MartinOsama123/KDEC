@@ -35,6 +35,10 @@ public class AlbumImgController {
     public ResponseEntity<List<AlbumImg>> getAllSongs() {
         return  ResponseEntity.ok().body(albumImgRepository.findAll());
     }
+    @GetMapping("/albums/{name}")
+    public ResponseEntity<AlbumImg> getAlbumInfo(@PathVariable ("name") String name) {
+        return  albumImgRepository.findById(name).map(albumImg -> ResponseEntity.ok().body(albumImg)).orElse(ResponseEntity.notFound().build());
+    }
     @PostMapping("/upload/img/{album}")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("image") List<MultipartFile> multipartFileList,@PathVariable("album") String album) throws IOException {
         List<String> fileNames = new ArrayList<>();

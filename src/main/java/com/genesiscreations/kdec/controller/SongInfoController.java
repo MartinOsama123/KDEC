@@ -38,12 +38,13 @@ public class SongInfoController {
     }
     @PostMapping("/songs/create")
     public  ResponseEntity<SongInfo> createSong(@RequestBody SongInfo songInfo){
+        songInfo.getSongName().replace(".mp3","");
         return  ResponseEntity.ok().body(songInfoRepository.save(songInfo));
     }
 
     @DeleteMapping("/songs/delete")
     public void deleteSong(@RequestBody SongInfo songName) throws IOException {
-        fileResource.deleteFile(songName.getSongName());
+        fileResource.deleteFile(songName.getSongName()+".mp3");
         songInfoRepository.delete(songName);
     }
 }
