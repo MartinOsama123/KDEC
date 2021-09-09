@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -42,7 +43,7 @@ public class UserController {
     }
     @GetMapping("/users/messages")
     public ResponseEntity<List<User>> getMessages()  {
-        List<User> users = userRepository.findAll().stream().filter(user -> !user.getMessages().isEmpty()).toList();
+        List<User> users = userRepository.findAll().stream().filter(user -> !user.getMessages().isEmpty()).collect(Collectors.toList());
         return  ResponseEntity.ok().body(users);
     }
     @PostMapping("/messages/create/{idToken}")
