@@ -46,6 +46,8 @@ public class UserController {
         List<User> users = userRepository.findAll().stream().filter(user -> !user.getMessages().isEmpty()).collect(Collectors.toList());
         return  ResponseEntity.ok().body(users);
     }
+    @GetMapping("/users/count")
+    public long list() {return userRepository.count();}
     @PostMapping("/messages/create/{idToken}")
     public  ResponseEntity<User> createMessage(@RequestBody String message,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);

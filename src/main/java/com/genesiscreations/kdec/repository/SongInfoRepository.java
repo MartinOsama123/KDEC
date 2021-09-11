@@ -15,5 +15,6 @@ public interface SongInfoRepository  extends JpaRepository<SongInfo, Integer> {
     public List<SongInfo> findAllByAlbumIgnoreCase(String albumName);
     @Query( value = "SELECT s FROM SongInfo s where lower(s.author) like lower(concat('%', :query,'%')) OR lower(s.albumName) like lower(concat('%', :query,'%')) OR lower(s.songName) like lower(concat('%', :query,'%'))")
     public List<SongInfo> findAllByAuthorOrAlbumOrSongIgnoreCase(String query);
-
+    @Query(value = "SELECT s from SongInfo s where s.songName = :songName")
+    public SongInfo findBySongInfo(String songName);
 }

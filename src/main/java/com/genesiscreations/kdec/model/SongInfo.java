@@ -13,14 +13,15 @@ public class SongInfo {
     String lang;
     String songName;
     String author;
-
+    long views;
     public SongInfo() {
     }
 
-    public SongInfo(String albumName, String lang, String songName) {
+    public SongInfo(String albumName, String lang, String songName, String author) {
         this.albumName = albumName;
         this.lang = lang;
         this.songName = songName;
+        this.author = author;
     }
 
     public int getId() {
@@ -57,5 +58,13 @@ public class SongInfo {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public long getViews() {
+        return views;
+    }
+
+    public void setViews(long views) {
+        this.views = views;
     }
 }
