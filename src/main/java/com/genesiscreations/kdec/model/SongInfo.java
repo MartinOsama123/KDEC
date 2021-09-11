@@ -67,4 +67,7 @@ public class SongInfo {
     public void setViews(long views) {
         this.views = views;
     }
+    public void incrementView(){
+        views++;
+    }
 }

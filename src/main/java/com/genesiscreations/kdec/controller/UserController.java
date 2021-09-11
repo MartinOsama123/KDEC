@@ -63,6 +63,7 @@ public class UserController {
         user.setUid(uid);
         return  ResponseEntity.ok().body(userRepository.save(user));
     }
+
     @PostMapping("/users/subscription/{topic}/{idToken}")
     public  ResponseEntity<Set<String>> addSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);

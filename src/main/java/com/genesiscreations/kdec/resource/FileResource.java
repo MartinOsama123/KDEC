@@ -31,9 +31,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @RequestMapping("/church")
 public class FileResource {
     public static final String PARENT = System.getProperty("user.dir") + "/mp3/";
-
-    @Autowired
-    private SongInfoRepository songInfoRepository;
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files") List<MultipartFile> multipartFileList) throws IOException {
         List<String> fileNames = new ArrayList<>();
@@ -56,9 +53,6 @@ public class FileResource {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("File-Name", filename);
         httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-        SongInfo s = songInfoRepository.findBySongInfo(filename);
-        s.setViews(s.getViews() + 1);
-        songInfoRepository.save(s);
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath))).headers(httpHeaders).body(resource);
     }
 

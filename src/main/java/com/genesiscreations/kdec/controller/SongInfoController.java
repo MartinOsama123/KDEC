@@ -41,7 +41,12 @@ public class SongInfoController {
         songInfo.getSongName().replace(".mp3","");
         return  ResponseEntity.ok().body(songInfoRepository.save(songInfo));
     }
-
+    @PostMapping("/songs/{name}")
+    public  ResponseEntity<SongInfo> viewSong(@PathVariable("name") String name){
+        SongInfo songInfo = songInfoRepository.findBySongInfo(name);
+        songInfo.incrementView();
+        return  ResponseEntity.ok().body(songInfoRepository.save(songInfo));
+    }
     @DeleteMapping("/songs/delete")
     public void deleteSong(@RequestBody SongInfo songName) throws IOException {
         fileResource.deleteFile(songName.getSongName()+".mp3");
