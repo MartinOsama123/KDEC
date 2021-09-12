@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static java.nio.file.Files.copy;
 import static java.nio.file.Paths.get;
@@ -49,6 +50,18 @@ public class AlbumImgController {
             fileNames.add(fileName);
         }
         albumImgRepository.save(new AlbumImg(album,fileNames.get(0)));
+        return ResponseEntity.ok().body(fileNames);
+    }
+    @PostMapping("/upload/img/session/{album}")
+    public ResponseEntity<List<String>> sessionPhoto(@RequestParam("image") List<MultipartFile> multipartFileList,@PathVariable("album") String album) throws IOException {
+        List<String> fileNames = new ArrayList<>();
+        for (MultipartFile file : multipartFileList) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            fileName = fileName.toLowerCase().replaceAll(fileName,album);
+            Path fileStorage = get(PARENT, fileName).toAbsolutePath().normalize();
+            copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
+            fileNames.add(fileName);
+        }
         return ResponseEntity.ok().body(fileNames);
     }
     @DeleteMapping("/album/delete")
