@@ -29,11 +29,7 @@ public class KdecApplication {
 
 		return FirebaseMessaging.getInstance(app);
 	}
-	public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
-		System.setProperty("file.encoding","UTF-8");
-		Field charset = Charset.class.getDeclaredField("defaultCharset");
-		charset.setAccessible(true);
-		charset.set(null,null);
+	public static void main(String[] args) {
 		SpringApplication.run(KdecApplication.class, args);
 	}
 
