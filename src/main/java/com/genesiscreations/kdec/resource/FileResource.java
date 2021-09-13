@@ -36,8 +36,11 @@ public class FileResource {
         List<String> fileNames = new ArrayList<>();
         for (MultipartFile file : multipartFileList) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            System.out.println("1");
             Path fileStorage = get(PARENT, fileName).toAbsolutePath().normalize();
+            System.out.println("2");
             copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
+            System.out.println("3");
             fileNames.add(fileName);
         }
         return ResponseEntity.ok().body(fileNames);

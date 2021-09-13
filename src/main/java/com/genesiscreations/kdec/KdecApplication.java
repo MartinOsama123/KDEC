@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 
 @SpringBootApplication
 public class KdecApplication {
@@ -27,7 +29,11 @@ public class KdecApplication {
 
 		return FirebaseMessaging.getInstance(app);
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
+		System.setProperty("file.encoding","UTF-8");
+		Field charset = Charset.class.getDeclaredField("defaultCharset");
+		charset.setAccessible(true);
+		charset.set(null,null);
 		SpringApplication.run(KdecApplication.class, args);
 	}
 
