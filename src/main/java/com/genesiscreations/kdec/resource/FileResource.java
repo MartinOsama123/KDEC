@@ -50,8 +50,7 @@ public class FileResource {
 
     @GetMapping("mp3/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) throws IOException {
-        ByteBuffer buffer = StandardCharsets.UTF_8.encode(filename);
-        filename = StandardCharsets.UTF_8.decode(buffer).toString();
+      filename = java.net.URLDecoder.decode(filename, "Windows-1251");
         Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(filename);
         if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
         Resource resource = new UrlResource(filePath.toUri());
