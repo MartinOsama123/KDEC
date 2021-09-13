@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +50,8 @@ public class FileResource {
 
     @GetMapping("mp3/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) throws IOException {
-
+        ByteBuffer buffer = StandardCharsets.UTF_8.encode(filename);
+        filename = StandardCharsets.UTF_8.decode(buffer).toString();
         Path filePath = get(PARENT).toAbsolutePath().normalize().resolve(filename);
         if (!Files.exists(filePath)) throw new FileNotFoundException(filename + "was not found");
         Resource resource = new UrlResource(filePath.toUri());
