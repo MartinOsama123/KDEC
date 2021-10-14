@@ -41,9 +41,8 @@ public class AlbumImgController {
         return  albumImgRepository.findById(name).map(albumImg -> ResponseEntity.ok().body(albumImg)).orElse(ResponseEntity.notFound().build());
     }
     @PostMapping("/upload/img/")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("image") String imgPath ,@RequestParam("album") String album) {
-        albumImgRepository.save(new AlbumImg(album,imgPath));
-        return ResponseEntity.ok().build();
+    public ResponseEntity<AlbumImg> uploadFiles(@RequestBody AlbumImg albumImg) {
+        return ResponseEntity.ok().body(albumImgRepository.save(albumImg));
     }
     @PostMapping("/upload/img/session/{album}")
     public ResponseEntity<List<String>> sessionPhoto(@RequestParam("image") List<MultipartFile> multipartFileList,@PathVariable("album") String album) throws IOException {
