@@ -40,17 +40,10 @@ public class AlbumImgController {
     public ResponseEntity<AlbumImg> getAlbumInfo(@PathVariable ("name") String name) {
         return  albumImgRepository.findById(name).map(albumImg -> ResponseEntity.ok().body(albumImg)).orElse(ResponseEntity.notFound().build());
     }
-    @PostMapping("/upload/img/{album}")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("image") List<MultipartFile> multipartFileList,@PathVariable("album") String album) throws IOException {
-        List<String> fileNames = new ArrayList<>();
-        for (MultipartFile file : multipartFileList) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            Path fileStorage = get(PARENT, fileName).toAbsolutePath().normalize();
-            copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
-            fileNames.add(fileName);
-        }
-        albumImgRepository.save(new AlbumImg(album,fileNames.get(0)));
-        return ResponseEntity.ok().body(fileNames);
+    @PostMapping("/upload/img/")
+    public ResponseEntity<List<String>> uploadFiles(@RequestParam("image") String imgPath ,@RequestParam("album") String album) {
+        albumImgRepository.save(new AlbumImg(album,imgPath));
+        return ResponseEntity.ok().build();
     }
     @PostMapping("/upload/img/session/{album}")
     public ResponseEntity<List<String>> sessionPhoto(@RequestParam("image") List<MultipartFile> multipartFileList,@PathVariable("album") String album) throws IOException {
