@@ -15,10 +15,10 @@ public class AlbumImg {
     public AlbumImg() {
     }
 
-    public AlbumImg(String albumName, String imgPath,String categoryName) {
+    public AlbumImg(String albumName,String categoryName, String imgPath) {
         this.albumName = albumName;
-        this.imgPath = imgPath;
         this.categoryName = categoryName;
+        this.imgPath = imgPath;
     }
 
     public String getAlbumName() {
