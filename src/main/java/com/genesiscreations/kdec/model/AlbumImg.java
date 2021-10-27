@@ -9,14 +9,16 @@ import javax.persistence.Table;
 public class AlbumImg {
     @Id
     String albumName;
+    String categoryName;
     String imgPath;
 
     public AlbumImg() {
     }
 
-    public AlbumImg(String albumName, String imgPath) {
+    public AlbumImg(String albumName, String imgPath,String categoryName) {
         this.albumName = albumName;
         this.imgPath = imgPath;
+        this.categoryName = categoryName;
     }
 
     public String getAlbumName() {
@@ -25,6 +27,14 @@ public class AlbumImg {
 
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getImgPath() {
