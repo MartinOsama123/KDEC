@@ -8,17 +8,20 @@ public class Category {
     @Id
             @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String categoryName;
+    String categoryTitle;
 
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
+    public Category() {
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public Category(String categoryTitle) {
+        this.categoryTitle = categoryTitle;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public String getCategoryTitle() {
+        return categoryTitle;
+    }
+
+    public void setCategoryTitle(String categoryName) {
+        this.categoryTitle = categoryName;
     }
 }
