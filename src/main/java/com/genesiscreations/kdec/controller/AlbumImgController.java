@@ -40,6 +40,10 @@ public class AlbumImgController {
     public ResponseEntity<AlbumImg> getAlbumInfo(@PathVariable ("name") String name) {
         return  albumImgRepository.findById(name).map(albumImg -> ResponseEntity.ok().body(albumImg)).orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/albums/category/{name}")
+    public ResponseEntity<List<AlbumImg>> getCategoryAlbums(@PathVariable ("name") String name) {
+        return   ResponseEntity.ok().body(albumImgRepository.findByCategoryName(name));
+    }
     @PostMapping("/upload/img/")
     public ResponseEntity<AlbumImg> uploadFiles(@RequestBody AlbumImg albumImg) {
         return ResponseEntity.ok().body(albumImgRepository.save(albumImg));
