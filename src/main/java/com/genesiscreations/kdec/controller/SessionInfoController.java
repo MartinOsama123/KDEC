@@ -34,7 +34,7 @@ public class SessionInfoController {
 
     @GetMapping("/channels")
     public ResponseEntity<List<SessionInfo>> getAllChannels() throws IOException {
-         final String BASE_URL = "https://api.agora.io";
+      /*   final String BASE_URL = "https://api.agora.io";
         final String USER = "d0f040453156454ca8cf3fbbd6c67f2e:cc9d0dfbed654b9a942d80243aabc546";
         final String APP_ID = "343e0fece606410eb65bc1b9a877b65e";
         URL url = new URL(BASE_URL+"/dev/v1/channel/"+APP_ID);
@@ -58,7 +58,7 @@ public class SessionInfoController {
                 }
             }
                 if(!found){ sessionInfoRepository.delete(s1);}
-        }
+        }*/
         return ResponseEntity.ok().body(sessionInfoRepository.findAll());
     }
     @PostMapping("/channels/create")
