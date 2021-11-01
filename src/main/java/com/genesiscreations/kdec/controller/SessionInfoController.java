@@ -1,21 +1,12 @@
 package com.genesiscreations.kdec.controller;
 
-import com.genesiscreations.kdec.model.AgoraChannel;
-import com.genesiscreations.kdec.model.AlbumImg;
 import com.genesiscreations.kdec.model.SessionInfo;
 import com.genesiscreations.kdec.repository.SessionInfoRepository;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +14,6 @@ import java.util.*;
 
 import static java.nio.file.Files.copy;
 import static java.nio.file.Paths.get;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @RequestMapping("/api")
@@ -64,6 +54,11 @@ public class SessionInfoController {
     @PostMapping("/channels/create")
     public SessionInfo createSession(@RequestBody SessionInfo sessionInfo){
         return sessionInfoRepository.save(sessionInfo);
+    }
+    @DeleteMapping("/channels/delete")
+    public ResponseEntity<String> deleteSession(@RequestBody SessionInfo sessionInfo){
+         sessionInfoRepository.delete(sessionInfo);
+         return ResponseEntity.ok().build();
     }
     @PostMapping("/channels/set")
     public List<SessionInfo> setAll(@RequestBody List<SessionInfo> sessionInfo){
