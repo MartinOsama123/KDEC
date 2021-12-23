@@ -49,7 +49,7 @@ public class SongInfoController {
     }
     @DeleteMapping("/songs/delete")
     public void deleteSong(@RequestBody SongInfo songName) throws IOException {
-        fileResource.deleteFile(songName.getSongName()+".mp3");
+       // fileResource.deleteFile(songName.getSongName()+".mp3");
         songInfoRepository.delete(songName);
     }
 }
