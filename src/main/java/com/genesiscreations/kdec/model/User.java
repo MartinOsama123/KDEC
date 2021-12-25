@@ -19,10 +19,10 @@ public class User {
 
     @OneToMany(fetch= FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
     List<NotificationInfo> notifications;
-    @ElementCollection
+  /*  @ElementCollection
 
     @CollectionTable(name = "user_subs", joinColumns = @JoinColumn(name = "user_uid"))
-    Set<String> subs;
+    Set<String> subs;*/
     @ElementCollection
     @CollectionTable(name = "user_messages", joinColumns = @JoinColumn(name = "user_uid"))
     List<String> messages;
@@ -34,7 +34,7 @@ public User(){
         this.name = name;
         this.phone = phone;
         this.notifications = notifications;
-        this.subs = subs;
+      //  this.subs = subs;
         this.messages = messages;
         this.age = age;
     }
@@ -82,14 +82,14 @@ public User(){
     public void setNotifications(List<NotificationInfo> notifications) {
         this.notifications = notifications;
     }
-
+/*
     public Set<String> getSubs() {
         return subs;
     }
 
     public void setSubs(Set<String> subs) {
         this.subs = subs;
-    }
+    }*/
 
     public List<String> getMessages() {
         return messages;
