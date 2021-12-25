@@ -32,10 +32,10 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         return  ResponseEntity.ok().body(userRepository.findAll());
     }
-    @GetMapping("/users/subscriptions/{idToken}")
+   /* @GetMapping("/users/subscriptions/{idToken}")
     public ResponseEntity<Set<String>> getAllSubs(@PathVariable("idToken") String idToken) throws FirebaseAuthException {
        return userRepository.findById(verifyToken(idToken)).map(user -> ResponseEntity.ok().body(user.getSubs())).orElse(ResponseEntity.notFound().build());
-    }
+    }*/
     @GetMapping("/users/{idToken}")
     public ResponseEntity<User> getUser(@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         Optional<User> user = userRepository.findById(verifyToken(idToken));
@@ -73,7 +73,7 @@ public class UserController {
         return  ResponseEntity.ok().body(userRepository.save(user));
     }
 
-    @PostMapping("/users/subscription/{topic}/{idToken}")
+    /*@PostMapping("/users/subscription/{topic}/{idToken}")
     public  ResponseEntity<Set<String>> addSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
         Optional<User> user = userRepository.findById(uid);
@@ -82,8 +82,8 @@ public class UserController {
             return ResponseEntity.ok().body(user.get().getSubs());
         });
         return ResponseEntity.notFound().build();
-    }
-    @DeleteMapping("/users/subscription/{topic}/{idToken}")
+    }*/
+  /*  @DeleteMapping("/users/subscription/{topic}/{idToken}")
     public  ResponseEntity<User> deleteSub(@PathVariable("topic") String topic,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
         Optional<User> user = userRepository.findById(uid);
@@ -92,7 +92,7 @@ public class UserController {
             return ResponseEntity.ok().body(user.get().getSubs());
         });
         return ResponseEntity.notFound().build();
-    }
+    }*/
 
 
     private String verifyToken(String token) throws FirebaseAuthException {
