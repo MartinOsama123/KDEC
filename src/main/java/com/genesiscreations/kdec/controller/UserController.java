@@ -57,6 +57,15 @@ public class UserController {
             return ResponseEntity.ok().body(userRepository.save(value));
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @PostMapping("/messages/create/admin/{email}")
+    public  ResponseEntity<User> replyMessage(@RequestBody String message, @PathVariable("email") String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.map(value -> {
+            value.getMessages().add(message);
+            return ResponseEntity.ok().body(userRepository.save(value));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/users/create/{idToken}")
     public  ResponseEntity<User> createUser(@RequestBody User user,@PathVariable("idToken") String idToken) throws FirebaseAuthException {
         String uid = verifyToken(idToken);
