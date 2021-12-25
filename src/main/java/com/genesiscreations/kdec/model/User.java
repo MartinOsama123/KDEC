@@ -26,15 +26,17 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "user_messages", joinColumns = @JoinColumn(name = "user_uid"))
     List<String> messages;
+    int age;
 public User(){
 }
-    public User(String email, String name, String phone, List<NotificationInfo> notifications, Set<String> subs, List<String> messages) {
+    public User(String email, String name, String phone, List<NotificationInfo> notifications, Set<String> subs, List<String> messages,int age) {
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.notifications = notifications;
         this.subs = subs;
         this.messages = messages;
+        this.age = age;
     }
 
     public void addNotification(NotificationInfo n){
@@ -95,5 +97,13 @@ public User(){
 
     public void setMessages(List<String> messages) {
         this.messages = messages;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
