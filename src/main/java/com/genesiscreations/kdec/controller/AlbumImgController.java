@@ -44,6 +44,14 @@ public class AlbumImgController {
     public ResponseEntity<List<AlbumImg>> getCategoryAlbums(@PathVariable ("name") String name) {
         return   ResponseEntity.ok().body(albumImgRepository.findByCategoryName(name));
     }
+    @PostMapping("/update/category/{name}")
+    public ResponseEntity<List<AlbumImg>> sortCategory(@PathVariable ("name") String name,@RequestBody List<AlbumImg> albumImg) {
+       List<AlbumImg> temp = albumImgRepository.findByCategoryName(name);
+       for(int i = 0;i<temp.size();i++){
+           albumImgRepository.deleteById(temp.get(i).getAlbumName());
+       }
+        return ResponseEntity.ok().body(albumImgRepository.saveAll(albumImg));
+    }
     @PostMapping("/upload/img")
     public ResponseEntity<AlbumImg> uploadFiles(@RequestBody AlbumImg albumImg) {
         return ResponseEntity.ok().body(albumImgRepository.save(albumImg));
